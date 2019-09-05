@@ -4,6 +4,10 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import NavigationWrapper from "./app/navigation/navigation-wrapper";
 
+import firebase from "firebase";
+import { firebaseConfig } from "./config";
+firebase.initializeApp(firebaseConfig);
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
