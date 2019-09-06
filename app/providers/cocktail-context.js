@@ -68,6 +68,7 @@ export const CocktailProvider = ({ children }) => {
             strCreativeCommonsConfirmed: "No",
             dateModified: "2016-07-21 10:12:45"
         },
+        favorites: [],
         random: {},
         isLoading: false,
         error: "",
@@ -92,6 +93,10 @@ export const CocktailProvider = ({ children }) => {
             } finally {
                 store.isLoading = false;
             }
+        },
+
+        addToFavorties(item) {
+            store.favorites.push(item);
         }
     }));
 

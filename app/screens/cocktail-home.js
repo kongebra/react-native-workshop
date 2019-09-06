@@ -3,7 +3,7 @@ import { useObserver } from "mobx-react-lite";
 import { useNavigation } from "react-navigation-hooks";
 import { cocktailContext } from "../providers/cocktail-context";
 
-import { Dimensions, SafeAreaView, Image } from "react-native";
+import { StyleSheet, Dimensions, SafeAreaView, Image } from "react-native";
 import {
     Container,
     Content,
@@ -40,7 +40,7 @@ export default function CocktailHome() {
     };
 
     const handleSwipeRight = () => {
-        console.log("RIGHT", current.strDrink);
+        store.addToFavorties(current);
     };
 
     const handleSwipeLeft = () => {
@@ -48,77 +48,87 @@ export default function CocktailHome() {
     };
 
     return useObserver(() => (
-        <SafeAreaView style={{ flex: 1 }}>
-            <Container>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Icon name="menu" />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Header</Title>
-                    </Body>
-                    <Right />
-                </Header>
+        <Container>
+            <Content contentContainerStyle={{ flex: 1 }}>
                 {store.isLoading ? (
-                    <Text style={{ textAlign: "center", fontSize: 32 }}>
-                        Loading...
-                    </Text>
+                    <Text>Loading...</Text>
                 ) : (
-                    <View>
-                        <DeckSwiper
-                            dataSource={store.cocktails}
-                            looping={false}
-                            renderEmpty={() => (
-                                <View style={{ alignSelf: "center" }}>
-                                    <Text>Over</Text>
+                    <DeckSwiper
+                        ref={c => (this._deckSwiper = c)}
+                        dataSource={store.cocktails}
+                        looping={false}
+                        renderEmpty={() => (
+                            <View style={styles.viewStyle}>
+                                <Text>Over</Text>
 
-                                    <Button
-                                        onPress={() => {
-                                            populateItems();
-                                        }}
-                                    >
-                                        <Text>Load more...</Text>
-                                    </Button>
-                                </View>
-                            )}
-                            renderItem={item => {
-                                setCurrent(item);
+                                <Button
+                                    onPress={() => {
+                                        populateItems();
+                                    }}
+                                >
+                                    <Text>Load more...</Text>
+                                </Button>
+                            </View>
+                        )}
+                        renderItem={item => {
+                            setCurrent(item);
 
-                                return (
-                                    <Card style={{ elevation: 3 }}>
-                                        <CardItem>
-                                            <Body>
-                                                <Text>{item.strDrink}</Text>
-                                                <Text note>
-                                                    {item.strCategory}
-                                                </Text>
-                                            </Body>
-                                        </CardItem>
-                                        <CardItem cardBody>
-                                            <Image
-                                                style={{
-                                                    height: Math.round(
-                                                        Dimensions.get("window")
-                                                            .height * 0.66666
-                                                    ),
-                                                    flex: 1
-                                                }}
-                                                source={{
-                                                    uri: item.strDrinkThumb
-                                                }}
-                                            />
-                                        </CardItem>
-                                    </Card>
-                                );
-                            }}
-                            onSwipeRight={handleSwipeRight}
-                            onSwipeLeft={handleSwipeLeft}
-                        />
-                    </View>
+                            return (
+                                <Card style={styles.cardStyle}>
+                                    <CardItem>
+                                        <Body>
+                                            <Text>{item.strDrink}</Text>
+                                            <Text note>{item.strCategory}</Text>
+                                        </Body>
+                                    </CardItem>
+                                    <CardItem cardBody>
+                                        <Image
+                                            style={styles.imageStyle}
+                                            source={{
+                                                uri: item.strDrinkThumb
+                                            }}
+                                        />
+                                    </CardItem>
+                                </Card>
+                            );
+                        }}
+                        onSwipeRight={handleSwipeRight}
+                        onSwipeLeft={handleSwipeLeft}
+                    />
                 )}
-            </Container>
-        </SafeAreaView>
+            </Content>
+
+            <Footer>
+                <FooterTab>
+                    <Button
+                        onPress={() => {
+                            navigate("Home");
+                        }}
+                    >
+                        <Icon name="home" />
+                    </Button>
+                    <Button
+                        onPress={() => {
+                            navigate("Favorites");
+                        }}
+                    >
+                        <Icon name="heart" />
+                    </Button>
+                </FooterTab>
+            </Footer>
+        </Container>
     ));
 }
+
+const styles = StyleSheet.create({
+    viewStyle: {
+        alignSelf: "center"
+    },
+    cardStyle: {
+        elevation: 3
+    },
+    imageStyle: {
+        height: Math.round(Dimensions.get("window").height * 0.66666),
+        flex: 1
+    }
+});

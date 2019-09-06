@@ -11,6 +11,8 @@ import { firebaseConfig } from "./config";
 firebase.initializeApp(firebaseConfig);
 */
 
+console.disableYellowBox = true;
+
 export default class App extends Component {
     constructor(props) {
         super(props);
