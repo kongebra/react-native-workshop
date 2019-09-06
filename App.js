@@ -4,9 +4,13 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import NavigationWrapper from "./app/navigation/navigation-wrapper";
 
+/*
 import firebase from "firebase";
 import { firebaseConfig } from "./config";
 firebase.initializeApp(firebaseConfig);
+*/
+
+import { useScreens } from "react-native-screens";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -29,6 +33,9 @@ export default class App extends React.Component {
         if (!this.state.isReady) {
             return <AppLoading />;
         }
+
+        // Optimizing rendering
+        useScreens();
 
         return <NavigationWrapper></NavigationWrapper>;
     }

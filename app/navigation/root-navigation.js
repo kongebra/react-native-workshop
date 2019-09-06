@@ -1,5 +1,5 @@
-import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import CocktailHome from "../screens/cocktail-home";
 import Settings from "../screens/settings";
 
@@ -19,7 +19,8 @@ const MainNavigation = createStackNavigator(
         }
     },
     {
-        initialRouteName: "cocktailHome"
+        initialRouteName: "cocktailHome",
+        headerMode: "none"
     }
 );
 
