@@ -22,7 +22,8 @@ import {
     Button,
     Footer,
     FooterTab,
-    Fab
+    Spinner,
+    Badge
 } from "native-base";
 
 export default function CocktailHome() {
@@ -36,7 +37,7 @@ export default function CocktailHome() {
     }, []);
 
     const populateItems = async () => {
-        await store.getRandom();
+        await store.getRandom(10);
     };
 
     const handleSwipeRight = () => {
@@ -51,22 +52,31 @@ export default function CocktailHome() {
         <Container>
             <Content contentContainerStyle={{ flex: 1 }}>
                 {store.isLoading ? (
-                    <Text>Loading...</Text>
+                    <React.Fragment>
+                        <Spinner color="blue" />
+                        <Text style={styles.loadingText}>
+                            Loading cocktail list
+                        </Text>
+                    </React.Fragment>
                 ) : (
                     <DeckSwiper
-                        ref={c => (this._deckSwiper = c)}
+                        style={styles.DeckSwiper}
                         dataSource={store.cocktails}
                         looping={false}
                         renderEmpty={() => (
                             <View style={styles.viewStyle}>
-                                <Text>Over</Text>
-
+                                <Badge style={styles.viewStyleBadge} warning>
+                                    <Text>List is empty currently empty</Text>
+                                </Badge>
                                 <Button
+                                    style={styles.moreButton}
                                     onPress={() => {
                                         populateItems();
                                     }}
                                 >
-                                    <Text>Load more...</Text>
+                                    <Text style={styles.moreButtonText}>
+                                        Load more cocktails
+                                    </Text>
                                 </Button>
                             </View>
                         )}
@@ -124,11 +134,25 @@ const styles = StyleSheet.create({
     viewStyle: {
         alignSelf: "center"
     },
+    viewStyleBadge: {
+        alignSelf: "center",
+        marginTop: 50
+    },
     cardStyle: {
         elevation: 3
     },
     imageStyle: {
         height: Math.round(Dimensions.get("window").height * 0.66666),
         flex: 1
+    },
+    deckSwiper: {},
+    moreButton: {
+        marginTop: 50
+    },
+    moreButtonText: {
+        fontSize: 24
+    },
+    loadingText: {
+        textAlign: "center"
     }
 });

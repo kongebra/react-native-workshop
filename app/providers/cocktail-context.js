@@ -74,13 +74,13 @@ export const CocktailProvider = ({ children }) => {
         error: "",
 
         // Actions
-        async getRandom() {
+        async getRandom(amount) {
             store.isLoading = true;
 
             try {
                 let cocktails = [];
 
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < amount; i++) {
                     const { data } = await getRandomCocktail();
                     const { drinks } = data;
 
