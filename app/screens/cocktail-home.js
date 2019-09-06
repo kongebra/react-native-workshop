@@ -5,7 +5,6 @@ import { cocktailContext } from "../providers/cocktail-context";
 
 import { StyleSheet, Dimensions, SafeAreaView, Image } from "react-native";
 import {
-<<<<<<< HEAD
     Container,
     Content,
     Header,
@@ -24,21 +23,6 @@ import {
     Footer,
     FooterTab,
     Fab
-=======
-  Container,
-  Header,
-  View,
-  DeckSwiper,
-  Card,
-  CardItem,
-  Text,
-  Left,
-  Right,
-  Body,
-  Title,
-  Icon,
-  Button
->>>>>>> 39953f6d29df2eb9443944fcf1122acb26321674
 } from "native-base";
 
 export default function CocktailHome() {
