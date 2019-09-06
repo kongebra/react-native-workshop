@@ -12,7 +12,12 @@ import {
     Button,
     Footer,
     FooterTab,
-    Card
+    Card,
+    CardItem,
+    Thumbnail,
+    Body,
+    Left,
+    Right
 } from "native-base";
 import { ScrollView } from "react-native";
 
@@ -26,7 +31,28 @@ export default function CocktailFavorites() {
                 <ScrollView>
                     {store.favorites.map((f, i) => (
                         <Card key={i}>
-                            <Text>{f.strDrink}</Text>
+                            <CardItem>
+                                <Left>
+                                    <Thumbnail
+                                        source={{ uri: f.strDrinkThumb }}
+                                    />
+                                    <Body>
+                                        <Text>{f.strDrink}</Text>
+                                    </Body>
+                                </Left>
+                                <Right>
+                                    <Button
+                                        rounded
+                                        onPress={() =>
+                                            navigate("Detail", {
+                                                id: f.idDrink
+                                            })
+                                        }
+                                    >
+                                        <Icon name="arrow-forward" />
+                                    </Button>
+                                </Right>
+                            </CardItem>
                         </Card>
                     ))}
                 </ScrollView>

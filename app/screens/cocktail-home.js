@@ -26,6 +26,8 @@ import {
     Badge
 } from "native-base";
 
+const DEFAULT_LOAD_AMOUNT = 3;
+
 export default function CocktailHome() {
     const store = useContext(cocktailContext);
     const [current, setCurrent] = useState({});
@@ -37,7 +39,7 @@ export default function CocktailHome() {
     }, []);
 
     const populateItems = async () => {
-        await store.getRandom(10);
+        await store.getRandom(DEFAULT_LOAD_AMOUNT);
     };
 
     const handleSwipeRight = () => {

@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 import { useLocalStore } from "mobx-react-lite";
 import {
     getRandomCocktail,
-    searchByIngredient
+    getCocktailById
 } from "../services/cocktail-service";
 
 export const cocktailContext = createContext();
@@ -69,6 +69,7 @@ export const CocktailProvider = ({ children }) => {
             dateModified: "2016-07-21 10:12:45"
         },
         favorites: [],
+        detail: {},
         random: {},
         isLoading: false,
         error: "",
@@ -97,6 +98,21 @@ export const CocktailProvider = ({ children }) => {
 
         addToFavorties(item) {
             store.favorites.push(item);
+        },
+
+        async getSingleCocktailById(id) {
+            store.isLoading = true;
+
+            try {
+                const { data } = await getCocktailById(id);
+                const { drinks } = data;
+
+                store.detail = drinks[0];
+            } catch (e) {
+                store.error = e.message;
+            } finally {
+                store.isLoading = false;
+            }
         }
     }));
 

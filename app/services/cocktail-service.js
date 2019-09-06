@@ -5,6 +5,6 @@ export async function getRandomCocktail() {
     return await http.get(API_URL.RANDOM_COCKTAIL);
 }
 
-export async function searchByIngredient(ingredient) {
-    return await http.get(`${API_URL.SEARCH_BY_INGREDIENT}${ingredient}`);
+export async function getCocktailById(id) {
+    return await http.get(`${API_URL.FULL_DETAIL_BY_ID}${id}`);
 }
