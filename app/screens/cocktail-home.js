@@ -48,7 +48,7 @@ export default function CocktailHome() {
     };
 
     return useObserver(() => (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
             <Container>
                 <Header>
                     <Left>
@@ -61,71 +61,63 @@ export default function CocktailHome() {
                     </Body>
                     <Right />
                 </Header>
-                <Content>
-                    {store.isLoading ? (
-                        <Text>Loading...</Text>
-                    ) : (
-                        <>
-                            <View>
-                                <DeckSwiper
-                                    ref={c => (this._deckSwiper = c)}
-                                    dataSource={store.cocktails}
-                                    looping={false}
-                                    renderEmpty={() => (
-                                        <View style={{ alignSelf: "center" }}>
-                                            <Text>Over</Text>
+                {store.isLoading ? (
+                    <Text style={{ textAlign: "center", fontSize: 32 }}>
+                        Loading...
+                    </Text>
+                ) : (
+                    <View>
+                        <DeckSwiper
+                            dataSource={store.cocktails}
+                            looping={false}
+                            renderEmpty={() => (
+                                <View style={{ alignSelf: "center" }}>
+                                    <Text>Over</Text>
 
-                                            <Button
-                                                onPress={() => {
-                                                    populateItems();
+                                    <Button
+                                        onPress={() => {
+                                            populateItems();
+                                        }}
+                                    >
+                                        <Text>Load more...</Text>
+                                    </Button>
+                                </View>
+                            )}
+                            renderItem={item => {
+                                setCurrent(item);
+
+                                return (
+                                    <Card style={{ elevation: 3 }}>
+                                        <CardItem>
+                                            <Body>
+                                                <Text>{item.strDrink}</Text>
+                                                <Text note>
+                                                    {item.strCategory}
+                                                </Text>
+                                            </Body>
+                                        </CardItem>
+                                        <CardItem cardBody>
+                                            <Image
+                                                style={{
+                                                    height: Math.round(
+                                                        Dimensions.get("window")
+                                                            .height * 0.66666
+                                                    ),
+                                                    flex: 1
                                                 }}
-                                            >
-                                                <Text>Load more...</Text>
-                                            </Button>
-                                        </View>
-                                    )}
-                                    renderItem={item => {
-                                        setCurrent(item);
-
-                                        return (
-                                            <Card style={{ elevation: 3 }}>
-                                                <CardItem>
-                                                    <Body>
-                                                        <Text>
-                                                            {item.strDrink}
-                                                        </Text>
-                                                        <Text note>
-                                                            {item.strCategory}
-                                                        </Text>
-                                                    </Body>
-                                                </CardItem>
-                                                <CardItem cardBody>
-                                                    <Image
-                                                        style={{
-                                                            height: Math.round(
-                                                                Dimensions.get(
-                                                                    "window"
-                                                                ).height *
-                                                                    0.66666
-                                                            ),
-                                                            flex: 1
-                                                        }}
-                                                        source={{
-                                                            uri:
-                                                                item.strDrinkThumb
-                                                        }}
-                                                    />
-                                                </CardItem>
-                                            </Card>
-                                        );
-                                    }}
-                                    onSwipeRight={handleSwipeRight}
-                                    onSwipeLeft={handleSwipeLeft}
-                                />
-                            </View>
-                        </>
-                    )}
-                </Content>
+                                                source={{
+                                                    uri: item.strDrinkThumb
+                                                }}
+                                            />
+                                        </CardItem>
+                                    </Card>
+                                );
+                            }}
+                            onSwipeRight={handleSwipeRight}
+                            onSwipeLeft={handleSwipeLeft}
+                        />
+                    </View>
+                )}
             </Container>
         </SafeAreaView>
     ));

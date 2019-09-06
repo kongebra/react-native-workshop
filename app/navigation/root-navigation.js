@@ -1,25 +1,17 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import CocktailHome from "../screens/cocktail-home";
+import CocktailDetail from "../screens/cocktail-detail";
 import Settings from "../screens/settings";
 
 const MainNavigation = createStackNavigator(
     {
-        cocktailHome: {
-            screen: CocktailHome,
-            navigationOptions: () => ({
-                title: "Homescreen"
-            })
-        },
-        settings: {
-            screen: Settings,
-            navigationOptions: () => ({
-                title: "Settings"
-            })
-        }
+        CocktailHome,
+        CocktailDetail,
+        Settings
     },
     {
-        initialRouteName: "cocktailHome",
+        initialRouteName: "CocktailDetail",
         headerMode: "none"
     }
 );
